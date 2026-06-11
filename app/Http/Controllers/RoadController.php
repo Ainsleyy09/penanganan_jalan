@@ -28,7 +28,6 @@ class RoadController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'road_code' => 'required|string|max:20',
             'name' => 'required|string|max:500',
             'road_length' => 'required|numeric',
         ]);
@@ -40,8 +39,18 @@ class RoadController extends Controller
             ], 422);
         }
 
+        $lastRoad = Road::latest('id')->first();
+        if ($lastRoad) {
+            $lastNumber = (int) preg_replace('/[^0-9]/', '', $lastRoad->road_code);
+            $newNumber = $lastNumber + 1;
+        } else {
+            $newNumber = 11;
+        }
+
+        $newRoadCode = $newNumber . 'K';
+
         $road = Road::create([
-            'road_code' => $request->road_code,
+            'road_code' => $newRoadCode,
             'name' => $request->name,
             'road_length' => $request->road_length,
         ]);

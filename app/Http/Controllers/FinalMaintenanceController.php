@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CoordinateLog;
+use App\Models\FinalMaintenance;
 use Illuminate\Http\Request;
 
-class CoordinateLogController extends Controller
+class FinalMaintenanceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class CoordinateLogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CoordinateLog $coordinateLog)
+    public function show(FinalMaintenance $finalMaintenance)
     {
         //
     }
@@ -42,7 +42,7 @@ class CoordinateLogController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CoordinateLog $coordinateLog)
+    public function edit(FinalMaintenance $finalMaintenance)
     {
         //
     }
@@ -50,7 +50,7 @@ class CoordinateLogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CoordinateLog $coordinateLog)
+    public function update(Request $request, FinalMaintenance $finalMaintenance)
     {
         //
     }
@@ -58,7 +58,7 @@ class CoordinateLogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CoordinateLog $coordinateLog)
+    public function destroy(FinalMaintenance $finalMaintenance)
     {
         //
     }

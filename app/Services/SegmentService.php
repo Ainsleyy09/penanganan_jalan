@@ -129,25 +129,21 @@ class SegmentService
 
         // group per tahun + side
         $grouped = $maintenanceLogs->groupBy(function ($item) {
-            return $item->year . '-' . $item->side;
+            return $item->year . '-'
+                . $item->side . '-'
+                . $item->maintenancetype_id;
         });
 
         foreach ($grouped as $group) {
 
             $first = $group->first();
 
-            // gabungkan maintenance type unik
-            $maintenanceTypes = $group
-                ->pluck('maintenance_type')
-                ->unique()
-                ->implode(', ');
-
             Maintenance::create([
                 'road_id' => $segment->road_id,
                 'segment_id' => $segment->id,
                 'year' => $first->year,
                 'side' => $first->side,
-                'maintenance_type' => $maintenanceTypes,
+                'maintenancetype_id' => $first->maintenancetype_id,
             ]);
         }
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Road;
 use App\Models\SurfaceLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -61,6 +62,35 @@ class SurfaceLogController extends Controller
             ], 422);
         }
 
+        $road = Road::find($request->road_id);
+
+        if (
+            $request->start_length > $road->road_length ||
+            $request->end_length > $road->road_length
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Length exceeds road maximum length!'
+            ], 422);
+        }
+
+        $overlap = SurfaceLog::where('road_id', $request->road_id)
+            ->where('side', $request->side)
+            ->where(function ($query) use ($request) {
+
+                $query
+                    ->where('start_length', '<', $request->end_length)
+                    ->where('end_length', '>', $request->start_length);
+            })
+            ->exists();
+
+        if ($overlap) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Surface range overlaps with existing data on this road side!'
+            ], 422);
+        }
+
         $surfacelog = SurfaceLog::create($request->all());
 
         return response()->json([
@@ -93,6 +123,36 @@ class SurfaceLogController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $validator->errors()
+            ], 422);
+        }
+
+        $road = Road::find($request->road_id);
+
+        if (
+            $request->start_length > $road->road_length ||
+            $request->end_length > $road->road_length
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Length exceeds road maximum length!'
+            ], 422);
+        }
+
+        $overlap = SurfaceLog::where('road_id', $request->road_id)
+            ->where('side', $request->side)
+            ->where('id', '!=', $id)
+            ->where(function ($query) use ($request) {
+
+                $query
+                    ->where('start_length', '<', $request->end_length)
+                    ->where('end_length', '>', $request->start_length);
+            })
+            ->exists();
+
+        if ($overlap) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Surface range overlaps with existing data on this road side!'
             ], 422);
         }
 

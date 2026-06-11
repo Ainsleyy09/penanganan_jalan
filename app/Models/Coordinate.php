@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Coordinate extends Model
 {
     protected $table = 'coordinates';
-    protected $fillable = ['segment_id', 'side', 'latitude','longitude'];
+    protected $fillable = ['road_id', 'latitude', 'longitude'];
 
-    public function segment(){
-        return $this->belongsTo(Segment::class);
+    public function road()
+    {
+        return $this->belongsTo(Road::class);
     }
 }
-

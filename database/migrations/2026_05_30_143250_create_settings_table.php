@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('coordinate_logs', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('road_id')->constrained('roads')->onDelete('cascade');
-            $table->enum('side', ['left', 'right']);
+            $table->integer('proposal_max_year');
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('coordinate_logs');
+        Schema::dropIfExists('settings');
     }
 };

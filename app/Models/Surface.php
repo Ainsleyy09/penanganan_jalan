@@ -17,7 +17,8 @@ class Surface extends Model
         return $this->belongsTo(Segment::class);
     }
 
-    public function surfacesubtype(){
+    public function surfaceSubtype()
+    {
         return $this->belongsTo(SurfaceSubtype::class);
     }
 }

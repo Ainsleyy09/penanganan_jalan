@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('coordinates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('segment_id')->constrained('segments')->onDelete('cascade');
-            $table->enum('side', ['left', 'right']);
+            $table->foreignId('road_id')->constrained('roads')->onDelete('cascade');
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->timestamps();

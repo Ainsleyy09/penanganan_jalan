@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Segment;
+use App\Models\Setting;
+use App\Models\SystemProcess;
+use App\Services\SegmentService;
 use Illuminate\Http\Request;
 
 class SegmentController extends Controller
@@ -39,5 +42,25 @@ class SegmentController extends Controller
             "message" => "Get Detail Segment",
             "data" => $segment
         ], 200);
+    }
+
+    public function generate(SegmentService $segmentService)
+    {
+        $segmentService->generateSegments();
+
+        $activeYear = Setting::first()->proposal_max_year;
+
+        SystemProcess::updateOrCreate(
+            ['year' => $activeYear],
+            [
+                'segment_generated' => true,
+                'segment_generated_at' => now()
+            ]
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Segments generated successfully'
+        ]);
     }
 }

@@ -233,7 +233,7 @@ class SurfaceLogSeeder extends Seeder
         SurfaceLog::create([
             'road_id' => 13,
             'start_length' => 0,
-            'end_length' => 4216,
+            'end_length' => 4220,
             'side' => 'right',
             'surface_subtype_id' => 2,
         ]);
@@ -242,7 +242,7 @@ class SurfaceLogSeeder extends Seeder
         SurfaceLog::create([
             'road_id' => 13,
             'start_length' => 0,
-            'end_length' => 4216,
+            'end_length' => 4220,
             'side' => 'left',
             'surface_subtype_id' => 2,
         ]);
@@ -279,7 +279,7 @@ class SurfaceLogSeeder extends Seeder
             'road_id' => 15,
             'start_length' => 0,
             'end_length' => 1310,
-            'side' => 'right',
+            'side' => 'left',
             'surface_subtype_id' => 2,
         ]);
 
@@ -575,7 +575,7 @@ class SurfaceLogSeeder extends Seeder
         SurfaceLog::create([
             'road_id' => 24,
             'start_length' => 0,
-            'end_length' => 5246,
+            'end_length' => 5250,
             'side' => 'right',
             'surface_subtype_id' => 2,
         ]);
@@ -584,7 +584,7 @@ class SurfaceLogSeeder extends Seeder
         SurfaceLog::create([
             'road_id' => 24,
             'start_length' => 0,
-            'end_length' => 5246,
+            'end_length' => 5250,
             'side' => 'left',
             'surface_subtype_id' => 2,
         ]);

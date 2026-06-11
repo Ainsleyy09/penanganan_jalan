@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MaintenanceLog;
+use App\Models\Road;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -55,13 +56,42 @@ class MaintenanceLogController extends Controller
             'side' => 'required|in:left,right',
             'start_length' => 'required|numeric',
             'end_length' => 'required|numeric|gte:start_length',
-            'maintenance_type' => 'required|in:Rehabilitasi,Rekonstruksi,Pelebaran,Pembangunan,Berkala,Rutin,Drainase,DPT Longsoran',
+            'maintenancetype_id' => 'required|exists:maintenance_types,id',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 "success" => false,
                 "message" => $validator->errors()
+            ], 422);
+        }
+
+        $road = Road::find($request->road_id);
+
+        if (
+            $request->start_length > $road->road_length ||
+            $request->end_length > $road->road_length
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Length exceeds road maximum length!'
+            ], 422);
+        }
+
+        $overlap = MaintenanceLog::where('road_id', $request->road_id)
+            ->where('side', $request->side)
+            ->where('year', $request->year)
+            ->where(function ($query) use ($request) {
+
+                $query
+                    ->where('start_length', '<', $request->end_length)
+                    ->where('end_length', '>', $request->start_length);
+            })
+            ->exists();
+        if ($overlap) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Maintenance range overlaps with existing data on this road side!'
             ], 422);
         }
 
@@ -91,7 +121,7 @@ class MaintenanceLogController extends Controller
             'side' => 'required|in:left,right',
             'start_length' => 'required|numeric',
             'end_length' => 'required|numeric|gte:start_length',
-            'maintenance_type' => 'required|in:Rehabilitasi,Rekonstruksi,Pelebaran,Pembangunan,Berkala,Rutin,Drainase,DPT Longsoran',
+            'maintenancetype_id' => 'required|exists:maintenance_types,id',
         ]);
 
         if ($validator->fails()) {
@@ -101,13 +131,44 @@ class MaintenanceLogController extends Controller
             ], 422);
         }
 
+        $road = Road::find($request->road_id);
+
+        if (
+            $request->start_length > $road->road_length ||
+            $request->end_length > $road->road_length
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Length exceeds road maximum length!'
+            ], 422);
+        }
+
+        $overlap = MaintenanceLog::where('road_id', $request->road_id)
+            ->where('side', $request->side)
+            ->where('year', $request->year)
+            ->where('id', '!=', $id)
+            ->where(function ($query) use ($request) {
+
+                $query
+                    ->where('start_length', '<', $request->end_length)
+                    ->where('end_length', '>', $request->start_length);
+            })
+            ->exists();
+
+        if ($overlap) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Maintenance range overlaps with existing data on this road side!'
+            ], 422);
+        }
+
         $maintenancelog->update([
             'road_id' => $request->road_id,
             'year' => $request->year,
             'side' => $request->side,
             'start_length' => $request->start_length,
             'end_length' => $request->end_length,
-            'maintenance_type' => $request->maintenance_type,
+            'maintenancetype_id' => $request->maintenancetype_id,
         ]);
 
         return response()->json([

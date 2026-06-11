@@ -18,8 +18,7 @@ return new class extends Migration
             $table->enum('side', ['left', 'right']);
             $table->decimal('start_length', 10, 2);
             $table->decimal('end_length', 10, 2);
-            $table->text('maintenance_type');
-            $table->enum('status', ['analyzed', 'approved', 'rejected'])->default('analyzed');;
+            $table->enum('status', ['approved','review']);
             $table->timestamps();
         });
     }

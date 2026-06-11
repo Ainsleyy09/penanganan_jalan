@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('maintenances', function (Blueprint $table) {
+        Schema::create('final_maintenances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('road_id')->constrained('roads')->onDelete('cascade');
-            $table->foreignId('segment_id')->constrained('segments')->onDelete('cascade');
-            $table->Year('year');
-            $table->enum('side', ['left', 'right']);
+            $table->foreignId('maintenance_proposal_id')->constrained('maintenance_proposals')->onDelete('cascade');
             $table->foreignId('maintenancetype_id')->constrained('maintenance_types')->onDelete('cascade');
             $table->timestamps();
         });
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('maintenances');
+        Schema::dropIfExists('final_maintenances');
     }
 };

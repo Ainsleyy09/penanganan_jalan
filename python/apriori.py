@@ -35,9 +35,12 @@ SELECT
 
     m.side AS Posisi_Jalur,
 
-    m.maintenance_type AS Jenis_Penanganan
+    m.maintenancetype_id AS Jenis_Penanganan
 
 FROM maintenances m
+
+JOIN maintenance_types mt
+ON mt.id = m.maintenancetype_id
 
 JOIN roads r
 ON r.id = m.road_id
@@ -53,16 +56,7 @@ transaksi = transaksi.groupby(
 )['Jenis_Penanganan'].apply(
 
     lambda x: sorted(
-
-        set(
-
-            item.strip()
-
-            for val in x
-
-            for item in val.split(',')
-
-        )
+        set(x)
     )
 
 ).reset_index()
@@ -228,7 +222,7 @@ for ruas in transaksi['Ruas'].unique():
 
                             print(
                                 f"{antecedent} "
-                                f"→ "
+                                f"-> "
                                 f"{consequent}"
                             )
 

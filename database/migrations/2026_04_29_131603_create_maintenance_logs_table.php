@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('side', ['left', 'right']);
             $table->decimal('start_length', 10, 2);
             $table->decimal('end_length', 10, 2);
-            $table->text('maintenance_type');
+            $table->foreignId('maintenancetype_id')->constrained('maintenance_types')->onDelete('cascade');
             $table->timestamps();
         });
     }

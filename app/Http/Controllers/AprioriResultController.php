@@ -4,62 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Models\AprioriResult;
 use Illuminate\Http\Request;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class AprioriResultController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $aprioriresult = AprioriResult::all();
+
+        if ($aprioriresult->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Apriori Results Not Found!'
+            ]);
+        }
+
+        return response()->json([
+            "success" => true,
+            "message" => "Get All Apriori Results Logs",
+            "data" => $aprioriresult
+        ], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show(string $id)
     {
-        //
-    }
+        $aprioriresult = AprioriResult::find($id);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        if (!$aprioriresult) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Apriori Result Not Found!'
+            ]);
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(AprioriResult $aprioriResult)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(AprioriResult $aprioriResult)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, AprioriResult $aprioriResult)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(AprioriResult $aprioriResult)
-    {
-        //
+        return response()->json([
+            "success" => true,
+            "message" => "Get Detail Apriori Result",
+            "data" => $aprioriresult
+        ], 200);
     }
 }

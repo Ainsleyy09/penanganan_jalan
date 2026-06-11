@@ -143,7 +143,7 @@ class WidthLogSeeder extends Seeder
         WidthLog::create([
             'road_id' => 8,
             'start_length' => 0,
-            'end_length' => 17001,
+            'end_length' => 1700,
             'side' => 'right',
             'width' => 8.5,
         ]);
@@ -152,7 +152,7 @@ class WidthLogSeeder extends Seeder
         WidthLog::create([
             'road_id' => 8,
             'start_length' => 0,
-            'end_length' => 17001,
+            'end_length' => 1700,
             'side' => 'left',
             'width' => 8.5,
         ]);
@@ -233,7 +233,7 @@ class WidthLogSeeder extends Seeder
         WidthLog::create([
             'road_id' => 13,
             'start_length' => 0,
-            'end_length' => 4216,
+            'end_length' => 4220,
             'side' => 'right',
             'width' => 7,
         ]);
@@ -242,7 +242,7 @@ class WidthLogSeeder extends Seeder
         WidthLog::create([
             'road_id' => 13,
             'start_length' => 0,
-            'end_length' => 4216,
+            'end_length' => 4220,
             'side' => 'left',
             'width' => 7,
         ]);
@@ -279,7 +279,7 @@ class WidthLogSeeder extends Seeder
             'road_id' => 15,
             'start_length' => 0,
             'end_length' => 1310,
-            'side' => 'right',
+            'side' => 'left',
             'width' => 8.7,
         ]);
 
@@ -431,7 +431,7 @@ class WidthLogSeeder extends Seeder
         WidthLog::create([
             'road_id' => 24,
             'start_length' => 0,
-            'end_length' => 5246,
+            'end_length' => 5250,
             'side' => 'right',
             'width' => 14,
         ]);
@@ -440,7 +440,7 @@ class WidthLogSeeder extends Seeder
         WidthLog::create([
             'road_id' => 24,
             'start_length' => 0,
-            'end_length' => 5246,
+            'end_length' => 5250,
             'side' => 'left',
             'width' => 14,
         ]);

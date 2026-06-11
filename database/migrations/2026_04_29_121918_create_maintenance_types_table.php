@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('maintenance_analyses', function (Blueprint $table) {
+        Schema::create('maintenance_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('maintenance_proposal_id')->constrained('maintenance_proposals')->onDelete('cascade');
-            $table->enum('status', ['approved','review']);
-            $table->text('description');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('maintenance_analyses');
+        Schema::dropIfExists('maintenance_types');
     }
 };

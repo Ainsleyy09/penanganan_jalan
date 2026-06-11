@@ -21,8 +21,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ActivitySeeder::class,
             SurfaceSeeder::class,
+            MaintenanceTypeSeeder::class,
             MaintenanceSeeder::class,
-            CoordinateLogSeeder::class,
             CoordinateSeeder::class,
             WidthSeeder::class,
             SurfaceTypeSeeder::class,
@@ -33,7 +33,10 @@ class DatabaseSeeder extends Seeder
             SegmentSeeder::class,
             AprioriResultSeeder::class,
             MaintenanceProposalSeeder::class,
+            ProposalMaintenanceSeeder::class,
+            FinalMaintenanceSeeder::class,
             MaintenanceAnalysisSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }

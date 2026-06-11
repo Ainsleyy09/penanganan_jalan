@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\MaintenanceAnalysis;
+use App\Models\MaintenanceType;
 use Illuminate\Http\Request;
 
 class MaintenanceAnalysisController extends Controller
 {
     public function index()
     {
-        $maintenanceanalysis = MaintenanceAnalysis::all();
+        $maintenanceanalysis = MaintenanceAnalysis::with('rules')->get();
 
         if ($maintenanceanalysis->isEmpty()) {
             return response()->json([
@@ -19,42 +20,28 @@ class MaintenanceAnalysisController extends Controller
         }
 
         return response()->json([
-            "success" => true,
-            "message" => "Get All Maintenance Analyses",
-            "data" => $maintenanceanalysis
-        ], 200);
+            'success' => true,
+            'message' => 'Get All Maintenance Analyses',
+            'data' => $maintenanceanalysis
+        ]);
     }
 
     public function show(string $id)
     {
-        $maintenanceAnalysis = MaintenanceAnalysis::find($id);
+        $maintenanceAnalysis = MaintenanceAnalysis::with('rules')
+            ->find($id);
 
         if (!$maintenanceAnalysis) {
             return response()->json([
                 'success' => false,
-                'message' => 'Maintenance Analyses Not Found!'
+                'message' => 'Maintenance Analysis Not Found!'
             ]);
         }
 
         return response()->json([
-            "success" => true,
-            "message" => "Get Detail Maintenance Analyses",
-            "data" => $maintenanceAnalysis
-        ], 200);
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function update(Request $request, MaintenanceAnalysis $maintenanceAnalysis)
-    {
-        //
-    }
-
-    public function destroy(MaintenanceAnalysis $maintenanceAnalysis)
-    {
-        //
+            'success' => true,
+            'message' => 'Get Detail Maintenance Analysis',
+            'data' => $maintenanceAnalysis
+        ]);
     }
 }

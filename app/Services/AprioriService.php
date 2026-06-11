@@ -8,8 +8,12 @@ class AprioriService
 {
     public function process()
     {
-        $output = shell_exec("python python/apriori.py");
+        shell_exec(
+            "python "
+                . base_path('python/apriori.py')
+                . " 2>&1"
+        );
 
-        return $output;
+        return true;
     }
 }

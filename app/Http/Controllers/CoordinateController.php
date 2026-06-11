@@ -47,8 +47,7 @@ class CoordinateController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'segment_id' => 'required|exists:segments,id',
-            'side' => 'required|in:left,right',
+            'road_id' => 'required|exists:roads,id',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
         ]);
@@ -60,7 +59,20 @@ class CoordinateController extends Controller
             ], 422);
         }
 
-        $coordinate = Coordinate::create($request->all());
+        $existingCoordinate = Coordinate::where('road_id', $request->road_id)->first();
+
+        if ($existingCoordinate) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Coordinate for this road already exists!'
+            ], 422);
+        }
+
+        $coordinate = Coordinate::create([
+            'road_id' => $request->road_id,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
 
         return response()->json([
             'success' => true,
@@ -81,8 +93,6 @@ class CoordinateController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'segment_id' => 'required|exists:segments,id',
-            'side' => 'required|in:left,right',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
         ]);
@@ -95,8 +105,6 @@ class CoordinateController extends Controller
         }
 
         $coordinate->update([
-            'segment_id' => $request->segment_id,
-            'side' => $request->side,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
         ]);
@@ -107,7 +115,6 @@ class CoordinateController extends Controller
             'data' => $coordinate
         ], 200);
     }
-
     public function destroy($id)
     {
         $coordinate = Coordinate::find($id);
