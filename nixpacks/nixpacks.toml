@@ -1,8 +1,0 @@
-[phases.setup]
-nixPkgs = ["python311"]
-
-[phases.install]
-cmds = [
-  "composer install --no-dev --optimize-autoloader",
-  "pip install -r requirements.txt"
-]
