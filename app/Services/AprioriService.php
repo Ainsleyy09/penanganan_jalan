@@ -6,9 +6,9 @@ use App\Models\Segment;
 
 class AprioriService
 {
-    public function process()
+public function process()
 {
-    set_time_limit(0);
+    set_time_limit(300);
 
     $output = shell_exec(
         "python " .
