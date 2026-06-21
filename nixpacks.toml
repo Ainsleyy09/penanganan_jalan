@@ -1,7 +1,7 @@
 [phases.setup]
 nixPkgs = [
   "php83",
-  "composer",
+  "php83Packages.composer",
   "python311"
 ]
 
