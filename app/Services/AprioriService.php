@@ -8,6 +8,8 @@ class AprioriService
 {
     public function process()
 {
+    set_time_limit(0);
+
     $output = shell_exec(
         "python " .
         base_path('python/apriori.py') .
