@@ -1,5 +1,9 @@
 [phases.setup]
-nixPkgs = ["python311"]
+nixPkgs = [
+  "php83",
+  "composer",
+  "python311"
+]
 
 [phases.install]
 cmds = [
