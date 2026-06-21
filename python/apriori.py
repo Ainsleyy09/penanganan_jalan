@@ -4,12 +4,19 @@ import json
 
 from itertools import combinations
 import warnings
+import os
 
 warnings.filterwarnings("ignore")
 
 # koneksi database
+
+
 engine = create_engine(
-    "mysql+pymysql://root:@127.0.0.1/pj"
+    f"mysql+pymysql://{os.getenv('MYSQLUSER')}:"
+    f"{os.getenv('MYSQLPASSWORD')}@"
+    f"{os.getenv('MYSQLHOST')}:"
+    f"{os.getenv('MYSQLPORT')}/"
+    f"{os.getenv('MYSQLDATABASE')}"
 )
 
 # hapus hasil apriori lama
