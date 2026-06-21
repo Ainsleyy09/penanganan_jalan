@@ -7,13 +7,18 @@ use App\Models\Segment;
 class AprioriService
 {
     public function process()
-    {
-        shell_exec(
-            "python "
-                . base_path('python/apriori.py')
-                . " 2>&1"
-        );
+{
+    $output = shell_exec(
+        "python " .
+        base_path('python/apriori.py') .
+        " 2>&1"
+    );
 
-        return true;
-    }
+    file_put_contents(
+        storage_path('logs/apriori.log'),
+        $output
+    );
+
+    return true;
+}
 }
