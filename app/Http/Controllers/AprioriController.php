@@ -46,23 +46,12 @@ class AprioriController extends Controller
         ], 200);
     }
     public function analyze(
-        AprioriService $service
-    ) {
-        $service->process();
+    AprioriService $service
+) {
+    $output = $service->process();
 
-        $activeYear = Setting::first()->proposal_max_year;
-
-        SystemProcess::updateOrCreate(
-            ['year' => $activeYear],
-            [
-                'apriori_generated' => true,
-                'apriori_generated_at' => now()
-            ]
-        );
-        return response()->json([
-            'success' => true,
-            'message' =>
-            'Apriori generated successfully'
-        ]);
-    }
+    return response()->json([
+        'output' => $output
+    ]);
+}
 }
